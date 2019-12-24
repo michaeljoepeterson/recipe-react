@@ -3,11 +3,11 @@ import {connect} from 'react-redux';
 import LoginForm from './login-form';
 
 export function LandingPage(props){
-    
+    const title = 'Veggie Might';
 
     return(
         <div className="center-container">
-            <LoginForm />
+            <LoginForm title={title}/>
         </div>
     )
 }
