@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {login} from '../actions/authActions';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import './styles/center.css';
 import './styles/login.css';
 import { Redirect } from 'react-router';
@@ -31,7 +32,7 @@ export function LoginForm(props){
     return(
         <div className="login-container center-container">
             <form className="login-form" onSubmit={(e) => tryLogin(e)}>
-                <h1 className="form-title">{props.title}</h1>
+                <Typography variant='h4' className="form-title">{props.title}</Typography>
                 <div className="input-container">
                     <TextField required id="user" label="Email" variant="outlined" helperText={props.error ? 'Error Loging in' : ''}/>
                 </div>
