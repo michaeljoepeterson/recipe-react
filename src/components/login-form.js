@@ -5,8 +5,12 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import './styles/center.css';
 import './styles/login.css';
+import { Redirect } from 'react-router';
 
 export function LoginForm(props){
+    if(props.currentUser){
+        return <Redirect to='/create-recipe'/>;
+    }
     function tryLogin(event){
         event.persist();
         console.log(event);
