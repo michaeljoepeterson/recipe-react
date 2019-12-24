@@ -6,7 +6,7 @@ export function LandingPage(props){
     
 
     return(
-        <div>
+        <div className="center-container">
             <LoginForm />
         </div>
     )
