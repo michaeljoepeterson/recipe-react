@@ -28,7 +28,7 @@ export class Navbar extends React.Component{
                         </IconButton>
                         <Typography variant='h6'><Link to="/create-recipe">Create</Link></Typography>
                         <Typography variant='h6'><Link to="/create-recipe">Recipes</Link></Typography>
-                        <Typography className="logout" variant='h6'><a onClick={this.logout}>Logout</a></Typography>
+                        <Typography className="logout" variant='h6'><a href="/" onClick={this.logout}>Logout</a></Typography>
                     </Toolbar>
                 </AppBar>``
             </div>
