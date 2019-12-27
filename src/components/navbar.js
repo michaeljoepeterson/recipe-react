@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import {logoutSession} from '../actions/authActions';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -11,6 +12,11 @@ import './styles/navbar.css';
 export class Navbar extends React.Component{
     displayNav;
     
+    logout = (event) => {
+        event.preventDefault();
+        this.props.dispatch(logoutSession());
+    }
+
     render(){
         this.displayNav = this.props.currentUser != null ? true : false;
         return(
@@ -21,10 +27,10 @@ export class Navbar extends React.Component{
                             <MenuIcon />
                         </IconButton>
                         <Typography variant='h6'><Link to="/create-recipe">Create</Link></Typography>
-                        <Typography variant='h6'><Link to="/create-recipe">Create</Link></Typography>
-                        <Typography className="logout" variant='h6'><Link to="/">Logout</Link></Typography>
+                        <Typography variant='h6'><Link to="/create-recipe">Recipes</Link></Typography>
+                        <Typography className="logout" variant='h6'><a onClick={this.logout}>Logout</a></Typography>
                     </Toolbar>
-                </AppBar>
+                </AppBar>``
             </div>
         );
     }

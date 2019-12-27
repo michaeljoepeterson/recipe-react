@@ -16,6 +16,11 @@ export const authError = (error) => ({
     type:AUTH_ERROR,
     error
 });
+//losgout actions
+export const LOGOUT = "LOGOUT";
+export const logoutSession = () => ({
+    type:LOGOUT
+});
 
 function getRndInteger(min, max) {
 return Math.floor(Math.random() * (max - min + 1) ) + min;
@@ -40,4 +45,4 @@ export const login = (username,password) => dispatch => {
     });
 
     return promise;
-}
+};

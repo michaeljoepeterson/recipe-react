@@ -1,7 +1,8 @@
 import {
     AUTH_SUCCESS,
     AUTH_REQUEST,
-    AUTH_ERROR
+    AUTH_ERROR,
+    LOGOUT
 } from '../actions/authActions';
 
 const initialState = {
@@ -16,21 +17,34 @@ export default function reducer(state = initialState,action){
         return Object.assign({},state,{
             loading:true,
             error:null,
-            currentUser:null
+            currentUser:null,
+            authToken:null
         });
     }
     else if(action.type === AUTH_ERROR){
         return Object.assign({},state,{
             loading:false,
             error:action.error,
-            currentUser:null
+            currentUser:null,
+            authToken:null
         });
     }
+    
     else if(action.type === AUTH_SUCCESS){
         return Object.assign({},state,{
             loading:false,
             error:null,
-            currentUser:action.currentUser
+            currentUser:action.currentUser,
+            authToken:1234
+        });
+    }
+
+    else if(action.type === LOGOUT){
+        return Object.assign({},state,{
+            loading:false,
+            error:null,
+            currentUser:null,
+            authToken:null
         });
     }
 

@@ -6,12 +6,9 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import './styles/center.css';
 import './styles/login.css';
-import { Redirect } from 'react-router';
 
 export function LoginForm(props){
-    if(props.currentUser){
-        return <Redirect to='/create-recipe'/>;
-    }
+    
     function tryLogin(event){
         event.persist();
         console.log(event);
