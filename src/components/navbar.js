@@ -10,6 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import './styles/navbar.css';
 //add logout functions
 export class Navbar extends React.Component{
+    //should change this to state
     displayNav;
     
     logout = (event) => {

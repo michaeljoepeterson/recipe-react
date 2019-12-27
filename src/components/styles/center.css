@@ -7,3 +7,7 @@
 .center-container > .login-container{
     height: 100vh;
 }
+
+.hidden{
+    display: none !important;
+}
