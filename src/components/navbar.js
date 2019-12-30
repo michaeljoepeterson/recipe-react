@@ -22,7 +22,7 @@ export class Navbar extends React.Component{
         this.displayNav = this.props.currentUser != null ? true : false;
         return(
             <div className={this.displayNav ? '' : 'hidden'}>
-                <AppBar>
+                <AppBar position="static" className="navbar">
                     <Toolbar>
                         <IconButton edge="start" color="inherit" aria-label="menu">
                             <MenuIcon />
@@ -31,7 +31,7 @@ export class Navbar extends React.Component{
                         <Typography variant='h6'><Link to="/create-recipe">Recipes</Link></Typography>
                         <Typography className="logout" variant='h6'><a href="/" onClick={this.logout}>Logout</a></Typography>
                     </Toolbar>
-                </AppBar>``
+                </AppBar>
             </div>
         );
     }
