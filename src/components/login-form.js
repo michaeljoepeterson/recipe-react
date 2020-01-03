@@ -32,7 +32,6 @@ export class LoginForm extends React.Component{
     }
     render(){
         this.displayLoading = this.props.loading ? true : false;
-        console.log(this.props.loading);
         return(
             <div className="login-container center-container">
                 <form className="login-form" onSubmit={(e) => this.tryLogin(e)}>
