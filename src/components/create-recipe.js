@@ -21,6 +21,7 @@ export class CreateRecipe extends React.Component{
             currentRecipe:{
                 title:'',
                 serving:'',
+                tte:'',
                 description:'',
                 steps:[
 
@@ -45,10 +46,68 @@ export class CreateRecipe extends React.Component{
         });
     }
 
+    addIngredient = (event) => {
+        const ingredient = this.state.ingredient + 1;
+        this.setState({
+            ingredient
+        });
+    }
+
+    addStep = (event) => {
+        const step = this.state.step + 1;
+        this.setState({
+            step
+        });
+    }
+
+    buildIngredients = () => {
+        let ingredientComponents = [];
+
+        for(let i = 0;i < this.state.ingredient;i++){
+            ingredientComponents.push(
+                <Grid key={i} xs={12} item container spacing={1}>
+                    <Grid item xs={12} md={4}>
+                        <TextField fullWidth multiline required id="ingredient" label={"Ingredient " + (i + 1)} variant="outlined" />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <TextField fullWidth multiline required id="amount" label={"Amount " + (i + 1)} variant="outlined" />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <InputLabel id="units">Units</InputLabel>
+                        <Select id="units" value={"cups"}>
+                            <MenuItem value={"cups"}>Cups</MenuItem>
+                            <MenuItem value={"tbs"}>Tbs</MenuItem>
+                            <MenuItem value={"ml"}>ml</MenuItem>
+                            <MenuItem value={"litres"}>Litres</MenuItem>
+                            <MenuItem value={"grams"}>grams</MenuItem>
+                            <MenuItem value={"pieces"}>Pieces</MenuItem>
+                        </Select>
+                    </Grid>
+                </Grid>
+            );
+        }
+
+        return ingredientComponents;
+    }
+
+    buildSteps = () => {
+        let stepComponenets = [];
+
+        for(let i = 0;i < this.state.step;i++){
+            stepComponenets.push(
+                <TextField className="step-spacing" key={i} fullWidth multiline required id="steps" label={"Step " + (i + 1)} variant="outlined" />
+            );
+        }
+
+        return stepComponenets;
+    }
+
     //render step inputs based on step in state, to avoid js way of adding step
     //also could do that for units so units could be added/removed
     render(){
         console.log(this.state);
+        const ingredientComponents = this.buildIngredients();
+        const stepComponenets = this.buildSteps();
         return(
             <div className="content-container">
                 <form>
@@ -56,37 +115,24 @@ export class CreateRecipe extends React.Component{
                         <Grid className="input-container-recipe" item xs={12}>
                             <TextField onChange={(e) => this.titleChanged(e,'title')} required fullWidth required id="title" label="Title" variant="outlined" />
                         </Grid>
-                        <Grid className="input-container-recipe" item xs={12}>
+                        <Grid className="input-container-recipe" item xs={12} md={6}>
                             <TextField onChange={(e) => this.titleChanged(e,'serving')} required id="serving" label="Serving Size" variant="outlined" />
+                        </Grid>
+                        <Grid className="input-container-recipe" item xs={12} md={6}>
+                            <TextField onChange={(e) => this.titleChanged(e,'tte')} required id="tte" label="TTE (Time to eat)" variant="outlined" />
                         </Grid>
                         <Grid className="input-container-recipe" item xs={12}>
                             <TextField onChange={(e) => this.titleChanged(e,'description')} fullWidth multiline required id="description" label="Description" variant="outlined" />
                         </Grid>
                         <Grid className="input-container-recipe"  alignItems='flex-end' item container spacing={2} xs={12} md={6}>
-                            <Grid item xs={12} md={4}>
-                                <TextField fullWidth multiline required id="ingredient" label={"Ingredient " + this.state.ingredient} variant="outlined" />
-                            </Grid>
-                            <Grid item xs={12} md={4}>
-                                <TextField fullWidth multiline required id="amount" label={"Amount " + this.state.ingredient} variant="outlined" />
-                            </Grid>
-                            <Grid item xs={12} md={4}>
-                                <InputLabel id="units">Units</InputLabel>
-                                <Select id="units" value={"cups"}>
-                                    <MenuItem value={"cups"}>Cups</MenuItem>
-                                    <MenuItem value={"tbs"}>Tbs</MenuItem>
-                                    <MenuItem value={"ml"}>ml</MenuItem>
-                                    <MenuItem value={"litres"}>Litres</MenuItem>
-                                    <MenuItem value={"grams"}>grams</MenuItem>
-                                    <MenuItem value={"pieces"}>Pieces</MenuItem>
-                                </Select>
-                            </Grid>
+                            {ingredientComponents}
                             <Grid item xs={12}>
-                                <Button className="input-spacing" variant="contained" color="primary">Add Ingredient</Button>
+                                <Button className="input-spacing" variant="contained" color="primary" onClick={(e) => this.addIngredient(e)}>Add Ingredient</Button>
                             </Grid>
                         </Grid> 
                         <Grid className="input-container-recipe" item xs={12} md={6}>
-                            <TextField fullWidth multiline required id="steps" label={"Step " + this.state.step} variant="outlined" />
-                            <Button className="input-spacing" variant="contained" color="primary">Add Step</Button>
+                            {stepComponenets}
+                            <Button className="input-spacing" variant="contained" color="primary" onClick={(e) => this.addStep(e)}>Add Step</Button>
                         </Grid>
                         <Grid className="input-container-recipe" item xs={12} md={6}>
                             <TextField onChange={(e) => this.titleChanged(e,'mainImage')} fullWidth multiline id="main-image" label="Main Image" variant="outlined" />
