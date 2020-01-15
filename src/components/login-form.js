@@ -11,15 +11,27 @@ import './styles/login.css';
 export class LoginForm extends React.Component{
     //should change this to state
     //only working cus of rerender in overall state
-    displayLoading;
+    constructor(props){
+        super(props)
+        this.state = {
+            email:'',
+            pass:'',
+            loading:false
+        }
+    }
+
+    inputChanged = (event,key) => {
+        event.persist();
+        const value = event.target.value;
+        this.setState({
+            [key]:value
+        });
+    }
     
    tryLogin = (event) =>{
         event.persist();
-        console.log(event);
-        const email = event.target[0].value;
-        const pass = event.target[1].value;
         event.preventDefault();
-        this.props.dispatch(login(email,pass))
+        this.props.dispatch(login(this.state.email,this.state.pass))
 
         .then(user => {
             console.log('current user after login', user);
@@ -37,16 +49,15 @@ export class LoginForm extends React.Component{
                 <form className="login-form" onSubmit={(e) => this.tryLogin(e)}>
                     <Typography variant='h4' className="form-title">{this.props.title}</Typography>
                     <div className="input-container">
-                        <TextField required id="user" label="Email" variant="outlined" helperText={this.props.error ? 'Error Loging in' : ''}/>
+                        <TextField required id="user" label="Email" variant="outlined" helperText={this.props.error ? 'Error Loging in' : ''} onChange={(e) => this.inputChanged(e,'email')}/>
                     </div>
                     <div className="input-container">
-                        <TextField required id="password" label="Password" variant="outlined" type="password" helperText={this.props.error ? 'Error Loging in' : ''}/>
+                        <TextField required id="password" label="Password" variant="outlined" type="password" helperText={this.props.error ? 'Error Loging in' : ''} onChange={(e) => this.inputChanged(e,'pass')}/>
                     </div>
                     <div className="input-container">
                         <CircularProgress className={this.displayLoading ? '' : 'hidden'} />
                         <Button className={this.displayLoading ? 'hidden' : ''} variant="contained" color="primary" type="submit">Login</Button>
                     </div>
-                {console.log('render user: ',this.props.currentUser,this.props.error)}
                 </form>
             </div>
         )

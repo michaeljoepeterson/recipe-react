@@ -35,7 +35,7 @@ export default function reducer(state = initialState,action){
             loading:false,
             error:null,
             currentUser:action.currentUser,
-            authToken:1234
+            authToken:action.token
         });
     }
 
