@@ -2,3 +2,13 @@
     margin-left: 16vw;
     margin-right: 16vw;
 }
+
+.icon-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-container:hover{
+    cursor: pointer;
+}
