@@ -40,7 +40,8 @@ export class CreateRecipe extends React.Component{
             ],
             mainImage:'',
             extraImages:'',
-            youtube:''
+            youtube:'',
+            videoNotes:''
         };
     }
     //update simple input states
@@ -50,7 +51,7 @@ export class CreateRecipe extends React.Component{
         //let newRecipe = this.state.currentRecipe;
         //newRecipe[key] = value;
         this.setState({
-            key:value
+            [key]:value
         });
     }
     //step or ingredient changed
@@ -183,6 +184,12 @@ export class CreateRecipe extends React.Component{
         return stepComponenets;
     }
 
+    saveRecipe = (event) =>{
+        event.persist();
+        event.preventDefault();
+        console.log(this.state);
+    }
+
     //render step inputs based on step in state, to avoid js way of adding step
     //also could do that for units so units could be added/removed
     render(){
@@ -191,7 +198,7 @@ export class CreateRecipe extends React.Component{
         const stepComponenets = this.buildSteps();
         return(
             <div className="content-container">
-                <form>
+                <form onSubmit={(e) => this.saveRecipe(e)}>
                     <Grid container>
                         <Grid className="input-container-recipe" item xs={12}>
                             <TextField onChange={(e) => this.titleChanged(e,'title')} required fullWidth required id="title" label="Title" variant="outlined" />
@@ -223,6 +230,9 @@ export class CreateRecipe extends React.Component{
                         </Grid>
                         <Grid className="input-container-recipe" item xs={12}>
                             <TextField onChange={(e) => this.titleChanged(e,'youtube')} fullWidth multiline id="youtube-link" label="Youtube link" variant="outlined" />
+                        </Grid>
+                        <Grid className="input-container-recipe" item xs={12}>
+                            <TextField onChange={(e) => this.titleChanged(e,'videoNotes')} fullWidth multiline id="video-notes" label="Video Notes" variant="outlined" />
                         </Grid>
                     </Grid>
                     <Grid className="input-container-recipe" item xs={12}>
