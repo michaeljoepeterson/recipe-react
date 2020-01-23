@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import './styles/containers.css';
 import './styles/forms.css';
 import { MenuItem } from '@material-ui/core';
+import {createRecipe} from '../actions/recipeActions';
 
 export class CreateRecipe extends React.Component{
     constructor(props) {
@@ -187,7 +188,20 @@ export class CreateRecipe extends React.Component{
     saveRecipe = (event) =>{
         event.persist();
         event.preventDefault();
-        console.log(this.state);
+        const recipe = Object.assign({},{},{
+            title:this.state.title,
+            servingSize:this.state.serving,
+            tte:this.state.tte,
+            description:this.state.description,
+            steps:this.state.steps,
+            ingredients:this.state.ingredients,
+            mainImage:this.state.mainImage,
+            extraImages:this.state.extraImages,
+            youtube:this.state.youtube,
+            videoNotes:this.state.videoNotes
+        });
+        console.log(recipe);
+        this.props.dispatch(createRecipe(recipe))
     }
 
     //render step inputs based on step in state, to avoid js way of adding step
