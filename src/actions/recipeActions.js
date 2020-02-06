@@ -64,6 +64,22 @@ export const createRecipe = (recipe) => (dispatch,getState) => {
     });
 }
 
-export const getRecipes = (skip,limit) => (dispatch,getState) => {
-    
+export const getRecipes = (skip,limit) => (dispatch) => {
+    dispatch(getRecipeRequest());
+    skip = skip ? skip : null;
+    limit = limit ? limit : null;
+    const query = `recipes-get?skip=${skip}&limit=${limit}`
+    return fetch(`${API_BASE_URL}/${query}`,{
+        method:'GET'
+    })
+    .then(res => normalizeResponseErrors(res))
+    .then(res => res.json())
+    .then((jsonRes) => {
+        dispatch(getRecipeSuccess(jsonRes));
+        console.log(jsonRes);
+    })
+    .catch(err => {
+        console.log('error getting recipes',err);
+        dispatch(getRecipeError(err));
+    });
 }

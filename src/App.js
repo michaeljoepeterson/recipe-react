@@ -8,7 +8,7 @@ import {Route, withRouter} from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
 import {theme} from './theme';
 import Navbar from './components/navbar';
-import recipeList from './components/recipe-list';
+
 //navbar have a prop that toggles display for when logged in
 //then map state to props
 function App() {
