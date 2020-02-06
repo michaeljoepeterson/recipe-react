@@ -20,6 +20,26 @@ export const createRecipeError = error =>( {
 	error
 });
 
+export const GET_RECIPE_REQUEST = "GET_RECIPE_REQUEST";
+
+export const getRecipeRequest = () => ({
+	type: GET_RECIPE_REQUEST
+});
+
+export const GET_RECIPE_SUCCESS = "GET_RECIPE_SUCCESS";
+
+export const getRecipeSuccess = (recipes) => ({
+    type: GET_RECIPE_SUCCESS,
+    recipes
+});
+
+export const GET_RECIPE_ERROR = "GET_RECIPE_ERROR";
+
+export const getRecipeError = error =>( {
+	type: GET_RECIPE_ERROR,
+	error
+});
+
 export const createRecipe = (recipe) => (dispatch,getState) => {
     dispatch(createRecipeRequest());
     const authToken = getState().auth.authToken;
@@ -42,4 +62,8 @@ export const createRecipe = (recipe) => (dispatch,getState) => {
         console.log('error logging in',err);
         dispatch(createRecipeError(err));
     });
+}
+
+export const getRecipes = (skip,limit) => (dispatch,getState) => {
+    
 }

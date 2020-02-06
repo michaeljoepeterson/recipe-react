@@ -7,7 +7,8 @@ import {
 const initialState = {
     error:null,
     loading:false,
-    message:null
+    message:null,
+    recipes:[]
 };
 
 const successMessage = "Recipe Created!";
