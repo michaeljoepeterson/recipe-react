@@ -25,6 +25,7 @@ export default function reducer(state = initialState,action){
             message:null
         });
     }
+    
     else if(action.type === CREATE_RECIPE_ERROR){
         return Object.assign({},state,{
             loading:false,
