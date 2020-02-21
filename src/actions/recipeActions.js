@@ -43,25 +43,31 @@ export const getRecipeError = error =>( {
 export const createRecipe = (recipe) => (dispatch,getState) => {
     dispatch(createRecipeRequest());
     const authToken = getState().auth.authToken;
-
-    return fetch(`${API_BASE_URL}/recipes`,{
-        method:'POST',
-        headers:{
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${authToken}`
-        },
-        body:JSON.stringify(recipe)
-    })
-    .then(res => normalizeResponseErrors(res))
-    .then(res => res.json())
-    .then((jsonRes) => {
-        dispatch(createRecipeSuccess());
-        console.log(jsonRes);
-    })
-    .catch(err => {
-        console.log('error logging in',err);
-        dispatch(createRecipeError(err));
+    let promise = new Promise((resolve,reject) => {
+        return fetch(`${API_BASE_URL}/recipes`,{
+            method:'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${authToken}`
+            },
+            body:JSON.stringify(recipe)
+        })
+        .then(res => normalizeResponseErrors(res))
+        .then(res => res.json())
+        .then((jsonRes) => {
+            dispatch(createRecipeSuccess());
+            console.log(jsonRes);
+            resolve(jsonRes);
+        })
+        .catch(err => {
+            console.log('error logging in',err);
+            dispatch(createRecipeError(err));
+            reject(err);
+        });
     });
+    
+
+    return promise
 }
 
 export const getRecipes = (skip,limit) => (dispatch) => {

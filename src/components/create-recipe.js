@@ -13,6 +13,11 @@ import './styles/containers.css';
 import './styles/forms.css';
 import { MenuItem } from '@material-ui/core';
 import {createRecipe} from '../actions/recipeActions';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 export class CreateRecipe extends React.Component{
     constructor(props) {
@@ -42,13 +47,18 @@ export class CreateRecipe extends React.Component{
             mainImage:'',
             extraImages:'',
             youtube:'',
-            videoNotes:''
+            videoNotes:'',
+            active:false,
+            saved:false,
+            savedMessage:'Saved'
         };
     }
     //update simple input states
     titleChanged = (event,key) => {
-        event.persist();
-        const value = event.target.value;
+        if(event.target){
+            event.persist();
+        }
+        const value = event.target ? event.target.value : event;
         //let newRecipe = this.state.currentRecipe;
         //newRecipe[key] = value;
         this.setState({
@@ -198,10 +208,44 @@ export class CreateRecipe extends React.Component{
             mainImage:this.state.mainImage,
             extraImages:this.state.extraImages,
             youtube:this.state.youtube,
-            videoNotes:this.state.videoNotes
+            videoNotes:this.state.videoNotes,
+            active:this.state.active
         });
         console.log(recipe);
         this.props.dispatch(createRecipe(recipe))
+
+        .then(resp=>{
+            console.log(resp);
+            let {code} = resp;
+            if(code === 200){
+                this.setState({
+                    saved:true,
+                    savedMessage:'Recipe Saved!'
+                });
+            }
+            else if(code === 401){
+                this.setState({
+                    saved:true,
+                    savedMessage:'Recipe already exists! Hamburgers'
+                });
+            }
+            else{
+                this.setState({
+                    saved:true,
+                    savedMessage:'Recipe not saved :\'(, something blew up'
+                });
+            }
+        })
+
+        .catch(err => {
+            console.log(err);
+        })
+    }
+
+    snackbarClosed = (name) => {
+        this.setState({
+            [name]:false
+        });
     }
 
     //render step inputs based on step in state, to avoid js way of adding step
@@ -248,11 +292,41 @@ export class CreateRecipe extends React.Component{
                         <Grid className="input-container-recipe" item xs={12}>
                             <TextField onChange={(e) => this.titleChanged(e,'videoNotes')} fullWidth multiline id="video-notes" label="Video Notes" variant="outlined" />
                         </Grid>
+                        <Grid className="input-container-recipe" item xs={12}>
+                        <FormControlLabel
+                            control={
+                            <Switch
+                                checked={this.state.active}
+                                onChange={(e) => this.titleChanged(e.target.checked,'active')}
+                                value="checkedB"
+                                color="primary"
+                            />
+                            }
+                            label="Active"
+                        />
+                        </Grid>
                     </Grid>
                     <Grid className="input-container-recipe" item xs={12}>
                         <Button type="submit" variant="contained">Save</Button>
                     </Grid>
                 </form>
+                <Snackbar
+                    anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                    }}
+                    open={this.state.saved}
+                    autoHideDuration={6000}
+                    onClose={(e) => this.snackbarClosed('saved')}
+                    message={this.state.savedMessage}
+                    action={
+                    <React.Fragment>
+                        <IconButton size="small" aria-label="close" color="inherit" onClick={(e) => this.snackbarClosed('saved')}>
+                        <CloseIcon fontSize="small" />
+                        </IconButton>
+                    </React.Fragment>
+                    }
+                />
             </div>
         );
     }
