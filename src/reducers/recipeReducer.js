@@ -21,7 +21,6 @@ export default function reducer(state = initialState,action){
         return Object.assign({},state,{
             loading:true,
             error:null,
-            authToken:null,
             message:null
         });
     }

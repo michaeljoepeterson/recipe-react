@@ -50,6 +50,7 @@ export class CreateRecipe extends React.Component{
             videoNotes:'',
             active:false,
             saved:false,
+            shrtDescription:'',
             savedMessage:'Saved'
         };
     }
@@ -209,7 +210,8 @@ export class CreateRecipe extends React.Component{
             extraImages:this.state.extraImages,
             youtube:this.state.youtube,
             videoNotes:this.state.videoNotes,
-            active:this.state.active
+            active:this.state.active,
+            shortDescription:this.state.shortDescription
         });
         console.log(recipe);
         this.props.dispatch(createRecipe(recipe))
@@ -269,6 +271,9 @@ export class CreateRecipe extends React.Component{
                         </Grid>
                         <Grid className="input-container-recipe" item xs={12}>
                             <TextField onChange={(e) => this.titleChanged(e,'description')} fullWidth multiline required id="description" label="Description" variant="outlined" />
+                        </Grid>
+                        <Grid className="input-container-recipe" item xs={12}>
+                            <TextField onChange={(e) => this.titleChanged(e,'shortDescription')} fullWidth multiline id="shortDescription" label="Short Description" variant="outlined" />
                         </Grid>
                         <Grid className="input-container-recipe"  alignItems='flex-end' item container spacing={2} xs={12} md={6}>
                             {ingredientComponents}
