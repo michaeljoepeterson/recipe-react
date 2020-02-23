@@ -51,7 +51,8 @@ export class CreateRecipe extends React.Component{
             active:false,
             saved:false,
             shrtDescription:'',
-            savedMessage:'Saved'
+            savedMessage:'Saved',
+            featured:false
         };
     }
     //update simple input states
@@ -211,7 +212,8 @@ export class CreateRecipe extends React.Component{
             youtube:this.state.youtube,
             videoNotes:this.state.videoNotes,
             active:this.state.active,
-            shortDescription:this.state.shortDescription
+            shortDescription:this.state.shortDescription,
+            featured:this.state.featured
         });
         console.log(recipe);
         this.props.dispatch(createRecipe(recipe))
@@ -297,17 +299,28 @@ export class CreateRecipe extends React.Component{
                         <Grid className="input-container-recipe" item xs={12}>
                             <TextField onChange={(e) => this.titleChanged(e,'videoNotes')} fullWidth multiline id="video-notes" label="Video Notes" variant="outlined" />
                         </Grid>
-                        <Grid className="input-container-recipe" item xs={12}>
+                        <Grid className="input-container-recipe" item xs={12} md={6}>
                         <FormControlLabel
                             control={
                             <Switch
                                 checked={this.state.active}
                                 onChange={(e) => this.titleChanged(e.target.checked,'active')}
-                                value="checkedB"
                                 color="primary"
                             />
                             }
                             label="Active"
+                        />
+                        </Grid>
+                        <Grid className="input-container-recipe" item xs={12} md={6}> 
+                        <FormControlLabel
+                            control={
+                            <Switch
+                                checked={this.state.featured}
+                                onChange={(e) => this.titleChanged(e.target.checked,'featured')}
+                                color="primary"
+                            />
+                            }
+                            label="Featured"
                         />
                         </Grid>
                     </Grid>

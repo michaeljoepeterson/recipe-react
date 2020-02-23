@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {getRecipes} from '../actions/recipeActions';
 import requiresLogin from '../HOC/requires-login';
+import GridList from '@material-ui/core/GridList';
+import './styles/containers.css';
 
 export class RecipeList extends React.Component{
 
@@ -36,8 +38,9 @@ export class RecipeList extends React.Component{
         return(
             <div>
                 <p>test</p>
-                <p>{this.props.match.params.skip}</p>
-                <p>{this.props.match.params.limit}</p>
+                <GridList cellHeight={200} spacing={1} className>
+                    
+                </GridList>
             </div>
         );
     }
