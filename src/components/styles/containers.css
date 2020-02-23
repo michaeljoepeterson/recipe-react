@@ -22,4 +22,5 @@
 .recipe-list-container{
     width:100%;
     height:500px;
+    justify-content: center;
 }
