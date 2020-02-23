@@ -81,7 +81,7 @@ export const getRecipes = (skip,limit) => (dispatch) => {
     .then(res => normalizeResponseErrors(res))
     .then(res => res.json())
     .then((jsonRes) => {
-        dispatch(getRecipeSuccess(jsonRes));
+        dispatch(getRecipeSuccess(jsonRes.recipes));
         console.log(jsonRes);
     })
     .catch(err => {

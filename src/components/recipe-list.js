@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {getRecipes} from '../actions/recipeActions';
 import requiresLogin from '../HOC/requires-login';
 import GridList from '@material-ui/core/GridList';
+import RecipeCard from './recipe-card';
 import './styles/containers.css';
 
 export class RecipeList extends React.Component{
@@ -33,13 +34,27 @@ export class RecipeList extends React.Component{
         return queryObject;
     }
 
-    render(){
+    buildRecipeCards = (recipes) => {
+        let recipeCards = [];
 
+        for(let i = 0;i < recipes.length;i++){
+            let recipe = recipes[i];
+            recipeCards.push(
+                <RecipeCard recipe={recipe} key={i}/>
+            );
+        }
+
+        return recipeCards;
+    }
+
+    render(){
+        const recipeCards = this.props.recipes ? this.buildRecipeCards(this.props.recipes) : [];
+        console.log(this.props.recipes);
+        console.log(recipeCards);
         return(
-            <div>
-                <p>test</p>
-                <GridList cellHeight={200} spacing={1} className>
-                    
+            <div className="flex-container">
+                <GridList cellHeight={200} spacing={1} className="recipe-list-container">
+                    {recipeCards}
                 </GridList>
             </div>
         );
