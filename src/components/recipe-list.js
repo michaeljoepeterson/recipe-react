@@ -3,7 +3,11 @@ import {connect} from 'react-redux';
 import {getRecipes} from '../actions/recipeActions';
 import requiresLogin from '../HOC/requires-login';
 import GridList from '@material-ui/core/GridList';
-import RecipeCard from './recipe-card';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import InfoIcon from '@material-ui/icons/Info';
 import './styles/containers.css';
 
 export class RecipeList extends React.Component{
@@ -36,11 +40,24 @@ export class RecipeList extends React.Component{
 
     buildRecipeCards = (recipes) => {
         let recipeCards = [];
-
+        const placeholderImage = 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=387&q=80%20387w';
         for(let i = 0;i < recipes.length;i++){
             let recipe = recipes[i];
             recipeCards.push(
-                <RecipeCard recipe={recipe} key={i}/>
+                <GridListTile style={{ height: '100%' }} cols={recipe.featured ? 2 : 1} rows={recipe.featured ? 2 : 1}>
+                    <img src={recipe.mainImage ?  recipe.mainImage : placeholderImage} alt={recipe.title}/>
+                    <GridListTileBar
+                    title={recipe.title}
+                    subtitle={<span>{recipe.shortDescription ? recipe.shortDescription : recipe.description.slice(0,100) + '...'}</span>}
+                    actionIcon={
+                        <Tooltip className="recipe-tooltip" title={'Serving Size: ' + recipe.servingSize + ' and prep time: ' + recipe.tte}>
+                            <IconButton aria-label={"Recipe Info: " + recipe.title}>
+                                <InfoIcon />
+                            </IconButton>
+                        </Tooltip>
+                    }
+                    />
+                </GridListTile>
             );
         }
 
@@ -50,10 +67,10 @@ export class RecipeList extends React.Component{
     render(){
         const recipeCards = this.props.recipes ? this.buildRecipeCards(this.props.recipes) : [];
         console.log(this.props.recipes);
-        console.log(recipeCards);
+        
         return(
             <div className="flex-container">
-                <GridList cellHeight={200} spacing={1} className="recipe-list-container">
+                <GridList cellHeight={200} spacing={10} className="recipe-list-container">
                     {recipeCards}
                 </GridList>
             </div>
