@@ -21,7 +21,9 @@ function App() {
         <Route exact path="/create-recipe" component={CreateRecipe} />
         <Route exact path="/create-admin" component={CreateAdmin} />
         <Route exact path="/recipes" component={RecipeList} />
-        <Route exact path="/recipes/:handle" component={RecipePage} />
+        <Route exact path="/recipes/:handle" render={(props) => (
+          <RecipePage key={props.match.params.pageid} {...props} />)
+        } />
       </div>
     </ThemeProvider>
   );

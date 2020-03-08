@@ -100,7 +100,7 @@ export const getSingleRecipe = (handle) => (dispatch) => {
     .then(res => res.json())
     .then((jsonRes) => {
         dispatch(getRecipeSuccess(jsonRes.recipe));
-        //console.log(jsonRes);
+        console.log(jsonRes);
     })
     .catch(err => {
         console.log('error getting recipes',err);
