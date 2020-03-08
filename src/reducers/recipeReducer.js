@@ -11,7 +11,8 @@ const initialState = {
     error:null,
     loading:false,
     message:null,
-    recipes:[]
+    recipes:[],
+    selectedRecipe:null
 };
 
 const successMessage = "Recipe Created!";

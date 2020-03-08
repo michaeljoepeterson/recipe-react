@@ -8,6 +8,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import InfoIcon from '@material-ui/icons/Info';
+import {Link} from 'react-router-dom';
 import './styles/containers.css';
 
 export class RecipeList extends React.Component{
@@ -44,19 +45,21 @@ export class RecipeList extends React.Component{
         for(let i = 0;i < recipes.length;i++){
             let recipe = recipes[i];
             recipeCards.push(
-                <GridListTile style={{ height: '100%' }} cols={recipe.featured ? 2 : 1} rows={recipe.featured ? 2 : 1}>
-                    <img src={recipe.mainImage ?  recipe.mainImage : placeholderImage} alt={recipe.title}/>
-                    <GridListTileBar
-                    title={recipe.title}
-                    subtitle={<span>{recipe.shortDescription ? recipe.shortDescription : recipe.description.slice(0,100) + '...'}</span>}
-                    actionIcon={
-                        <Tooltip className="recipe-tooltip" title={'Serving Size: ' + recipe.servingSize + ' and prep time: ' + recipe.tte}>
-                            <IconButton aria-label={"Recipe Info: " + recipe.title}>
-                                <InfoIcon />
-                            </IconButton>
-                        </Tooltip>
-                    }
-                    />
+                <GridListTile style={{ height: '100%' }} cols={recipe.featured ? 2 : 1} rows={recipe.featured ? 2 : 1} key={i}>
+                    <Link to={'recipes/' + recipe.handle}>
+                        <img src={recipe.mainImage ?  recipe.mainImage : placeholderImage} alt={recipe.title}/>
+                        <GridListTileBar
+                        title={recipe.title}
+                        subtitle={<span>{recipe.shortDescription ? recipe.shortDescription : recipe.description.slice(0,100) + '...'}</span>}
+                        actionIcon={
+                            <Tooltip className="recipe-tooltip" title={'Serving Size: ' + recipe.servingSize + ' and prep time: ' + recipe.tte}>
+                                <IconButton aria-label={"Recipe Info: " + recipe.title}>
+                                    <InfoIcon />
+                                </IconButton>
+                            </Tooltip>
+                        }
+                        />
+                    </Link>
                 </GridListTile>
             );
         }

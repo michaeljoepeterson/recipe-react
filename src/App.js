@@ -4,6 +4,7 @@ import LandingPage from './components/landing-page';
 import CreateAdmin from './components/create-admin';
 import CreateRecipe from './components/create-recipe';
 import RecipeList from './components/recipe-list';
+import RecipePage from './components/recipe-page';
 import {Route, withRouter} from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/styles';
 import {theme} from './theme';
@@ -19,7 +20,8 @@ function App() {
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/create-recipe" component={CreateRecipe} />
         <Route exact path="/create-admin" component={CreateAdmin} />
-        <Route exact path="/recipes/:skip?/:limit?" component={RecipeList} />
+        <Route exact path="/recipes" component={RecipeList} />
+        <Route exact path="/recipes/:handle" component={RecipePage} />
       </div>
     </ThemeProvider>
   );

@@ -89,3 +89,21 @@ export const getRecipes = (skip,limit) => (dispatch) => {
         dispatch(getRecipeError(err));
     });
 }
+
+export const getSingleRecipe = (handle) => (dispatch) => {
+    dispatch(getRecipeRequest());
+    const query = `recipes-get/${handle}`
+    return fetch(`${API_BASE_URL}/${query}`,{
+        method:'GET'
+    })
+    .then(res => normalizeResponseErrors(res))
+    .then(res => res.json())
+    .then((jsonRes) => {
+        dispatch(getRecipeSuccess(jsonRes.recipe));
+        //console.log(jsonRes);
+    })
+    .catch(err => {
+        console.log('error getting recipes',err);
+        dispatch(getRecipeError(err));
+    });
+}
