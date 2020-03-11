@@ -50,10 +50,31 @@ export class CreateRecipe extends React.Component{
             videoNotes:'',
             active:false,
             saved:false,
-            shrtDescription:'',
+            shortDescription:'',
             savedMessage:'Saved',
             featured:false
         };
+    }
+    componentDidMount() {
+        console.log('=================props',this.props);
+        if(this.props.selectedRecipe){
+            let {selectedRecipe} = this.props;
+            this.setState({
+                step:selectedRecipe.steps.length,
+                ingredient:selectedRecipe.ingredients.length,
+                title:selectedRecipe.title,
+                serving:selectedRecipe.servingSize,
+                description:selectedRecipe.description,
+                ingredients:selectedRecipe.ingredients,
+                mainImage:selectedRecipe.mainImage,
+                extraImages:selectedRecipe.extraImages,
+                youtube:selectedRecipe.youtube,
+                videoNotes:selectedRecipe.videoNotes,
+                shortDescription:selectedRecipe.shortDescription,
+                featured:selectedRecipe.featured,
+                active:selectedRecipe.active
+            });
+        }
     }
     //update simple input states
     titleChanged = (event,key) => {
@@ -161,7 +182,7 @@ export class CreateRecipe extends React.Component{
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <InputLabel id="units">Units</InputLabel>
-                        <Select onChange={(e) => this.stepChanged(e,'ingredients',currentIngredient.id,'units')} id="units" value={"cups"} value={currentIngredient.units}>
+                        <Select onChange={(e) => this.stepChanged(e,'ingredients',currentIngredient.id,'units')} id="units" value={currentIngredient.units}>
                             <MenuItem value={"cups"}>Cups</MenuItem>
                             <MenuItem value={"tbs"}>Tbs</MenuItem>
                             <MenuItem value={"ml"}>ml</MenuItem>
@@ -263,7 +284,7 @@ export class CreateRecipe extends React.Component{
                 <form onSubmit={(e) => this.saveRecipe(e)}>
                     <Grid container>
                         <Grid className="input-container-recipe" item xs={12}>
-                            <TextField onChange={(e) => this.titleChanged(e,'title')} required fullWidth required id="title" label="Title" variant="outlined" />
+                            <TextField onChange={(e) => this.titleChanged(e,'title')} required fullWidth required id="title" label="Title" variant="outlined" value={this.state.title}/>
                         </Grid>
                         <Grid className="input-container-recipe" item xs={12} md={6}>
                             <TextField onChange={(e) => this.titleChanged(e,'serving')} required id="serving" label="Serving Size" variant="outlined" />

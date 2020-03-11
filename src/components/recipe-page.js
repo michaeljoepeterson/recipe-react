@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import requiresLogin from '../HOC/requires-login';
 import {getSingleRecipe} from '../actions/recipeActions';
+import CreateRecipe from './create-recipe';
 
 export class RecipePage extends React.Component{
     constructor(props) {
@@ -17,7 +18,7 @@ export class RecipePage extends React.Component{
         console.log(this.props.recipes);
         return(
             <div className="center-container">
-                <h1>test</h1>
+                <CreateRecipe selectedRecipe={this.props.recipes[0]}/>
             </div>
         )
     }
