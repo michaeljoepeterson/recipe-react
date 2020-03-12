@@ -40,6 +40,13 @@ export const getRecipeError = error =>( {
 	error
 });
 
+export const GET_SINGLE_RECIPE_SUCCESS = "GET_SINGLE_RECIPE_SUCCESS";
+
+export const getSingleRecipeSuccess = (recipe) => ({
+    type: GET_SINGLE_RECIPE_SUCCESS,
+    recipe
+});
+
 export const createRecipe = (recipe) => (dispatch,getState) => {
     dispatch(createRecipeRequest());
     const authToken = getState().auth.authToken;
@@ -99,7 +106,7 @@ export const getSingleRecipe = (handle) => (dispatch) => {
     .then(res => normalizeResponseErrors(res))
     .then(res => res.json())
     .then((jsonRes) => {
-        dispatch(getRecipeSuccess(jsonRes.recipe));
+        dispatch(getSingleRecipeSuccess(jsonRes.recipe[0]));
         console.log(jsonRes);
     })
     .catch(err => {

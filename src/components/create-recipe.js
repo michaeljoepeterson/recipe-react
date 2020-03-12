@@ -372,6 +372,7 @@ export class CreateRecipe extends React.Component{
 }
 
 const mapStateToProps = state => ({
-    currentUser: state.auth.currentUser
+    currentUser: state.auth.currentUser,
+    selectedRecipe:state.recipe.selectedRecipe
 });
 export default requiresLogin()(connect(mapStateToProps)(CreateRecipe));

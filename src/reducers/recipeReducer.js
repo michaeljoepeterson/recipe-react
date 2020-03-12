@@ -4,7 +4,8 @@ import {
     CREATE_RECIPE_ERROR,
     GET_RECIPE_REQUEST,
     GET_RECIPE_SUCCESS,
-    GET_RECIPE_ERROR
+    GET_RECIPE_ERROR,
+    GET_SINGLE_RECIPE_SUCCESS
 } from '../actions/recipeActions';
 
 const initialState = {
@@ -46,7 +47,8 @@ export default function reducer(state = initialState,action){
             loading:true,
             error:null,
             message:null,
-            recipes:[]
+            recipes:[],
+            selectedRecipe:null
         });
     }
 
@@ -54,7 +56,8 @@ export default function reducer(state = initialState,action){
         return Object.assign({},state,{
             loading:false,
             error:action.error,
-            recipes:[]
+            recipes:[],
+            selectedRecipe:null
         });
     }
 
@@ -64,6 +67,16 @@ export default function reducer(state = initialState,action){
             error:null,
             message:null,
             recipes:action.recipes
+        });
+    }
+
+    else if(action.type === GET_SINGLE_RECIPE_SUCCESS){
+        console.log(action.recipe);
+        return Object.assign({},state,{
+            loading:false,
+            error:null,
+            message:null,
+            selectedRecipe:action.recipe
         });
     }
 
