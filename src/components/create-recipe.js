@@ -62,17 +62,19 @@ export class CreateRecipe extends React.Component{
             this.setState({
                 step:selectedRecipe.steps.length,
                 ingredient:selectedRecipe.ingredients.length,
-                title:selectedRecipe.title,
-                serving:selectedRecipe.servingSize,
-                description:selectedRecipe.description,
+                title:selectedRecipe.title ? selectedRecipe.title : "",
+                serving:selectedRecipe.servingSize ? selectedRecipe.servingSize : "",
+                description:selectedRecipe.description ? selectedRecipe.description : "",
                 ingredients:selectedRecipe.ingredients,
-                mainImage:selectedRecipe.mainImage,
-                extraImages:selectedRecipe.extraImages,
-                youtube:selectedRecipe.youtube,
-                videoNotes:selectedRecipe.videoNotes,
-                shortDescription:selectedRecipe.shortDescription,
+                mainImage:selectedRecipe.mainImage ? selectedRecipe.mainImage : "",
+                extraImages:selectedRecipe.extraImages ? selectedRecipe.extraImages : "",
+                youtube:selectedRecipe.youtube ? selectedRecipe.youtube : "",
+                videoNotes:selectedRecipe.videoNotes ? selectedRecipe.videoNotes : "",
+                shortDescription:selectedRecipe.shortDescription ? selectedRecipe.shortDescription : "",
                 featured:selectedRecipe.featured,
-                active:selectedRecipe.active
+                active:selectedRecipe.active,
+                steps:selectedRecipe.steps,
+                tte:selectedRecipe.tte
             });
         }
     }
@@ -287,16 +289,16 @@ export class CreateRecipe extends React.Component{
                             <TextField onChange={(e) => this.titleChanged(e,'title')} required fullWidth required id="title" label="Title" variant="outlined" value={this.state.title}/>
                         </Grid>
                         <Grid className="input-container-recipe" item xs={12} md={6}>
-                            <TextField onChange={(e) => this.titleChanged(e,'serving')} required id="serving" label="Serving Size" variant="outlined" />
+                            <TextField onChange={(e) => this.titleChanged(e,'serving')} required id="serving" label="Serving Size" variant="outlined" value={this.state.serving}/>
                         </Grid>
                         <Grid className="input-container-recipe" item xs={12} md={6}>
-                            <TextField onChange={(e) => this.titleChanged(e,'tte')} required id="tte" label="TTE (Time to eat)" variant="outlined" />
+                            <TextField onChange={(e) => this.titleChanged(e,'tte')} required id="tte" label="TTE (Time to eat)" variant="outlined" value={this.state.tte}/>
                         </Grid>
                         <Grid className="input-container-recipe" item xs={12}>
-                            <TextField onChange={(e) => this.titleChanged(e,'description')} fullWidth multiline required id="description" label="Description" variant="outlined" />
+                            <TextField onChange={(e) => this.titleChanged(e,'description')} fullWidth multiline required id="description" label="Description" variant="outlined" value={this.state.description}/>
                         </Grid>
                         <Grid className="input-container-recipe" item xs={12}>
-                            <TextField onChange={(e) => this.titleChanged(e,'shortDescription')} fullWidth multiline id="shortDescription" label="Short Description" variant="outlined" />
+                            <TextField onChange={(e) => this.titleChanged(e,'shortDescription')} fullWidth multiline id="shortDescription" label="Short Description" variant="outlined" value={this.state.shortDescription}/>
                         </Grid>
                         <Grid className="input-container-recipe"  alignItems='flex-end' item container spacing={2} xs={12} md={6}>
                             {ingredientComponents}
@@ -309,16 +311,16 @@ export class CreateRecipe extends React.Component{
                             <Button className="input-spacing" variant="contained" color="primary" onClick={(e) => this.addStep(e)}>Add Step</Button>
                         </Grid>
                         <Grid className="input-container-recipe" item xs={12} md={6}>
-                            <TextField onChange={(e) => this.titleChanged(e,'mainImage')} fullWidth multiline id="main-image" label="Main Image" variant="outlined" />
+                            <TextField onChange={(e) => this.titleChanged(e,'mainImage')} fullWidth multiline id="main-image" label="Main Image" variant="outlined" value={this.state.mainImage}/>
                         </Grid>
                         <Grid className="input-container-recipe" item xs={12} md={6}>
-                            <TextField onChange={(e) => this.titleChanged(e,'extraImages')} fullWidth multiline id="extra-images" label="Extra Images (comma seperated)" variant="outlined" />
+                            <TextField onChange={(e) => this.titleChanged(e,'extraImages')} fullWidth multiline id="extra-images" label="Extra Images (comma seperated)" variant="outlined" value={this.state.extraImages}/>
                         </Grid>
                         <Grid className="input-container-recipe" item xs={12}>
-                            <TextField onChange={(e) => this.titleChanged(e,'youtube')} fullWidth multiline id="youtube-link" label="Youtube link" variant="outlined" />
+                            <TextField onChange={(e) => this.titleChanged(e,'youtube')} fullWidth multiline id="youtube-link" label="Youtube link" variant="outlined" value={this.state.youtube}/>
                         </Grid>
                         <Grid className="input-container-recipe" item xs={12}>
-                            <TextField onChange={(e) => this.titleChanged(e,'videoNotes')} fullWidth multiline id="video-notes" label="Video Notes" variant="outlined" />
+                            <TextField onChange={(e) => this.titleChanged(e,'videoNotes')} fullWidth multiline id="video-notes" label="Video Notes" variant="outlined" value={this.state.videoNotes}/>
                         </Grid>
                         <Grid className="input-container-recipe" item xs={12} md={6}>
                         <FormControlLabel

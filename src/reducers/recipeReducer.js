@@ -71,7 +71,6 @@ export default function reducer(state = initialState,action){
     }
 
     else if(action.type === GET_SINGLE_RECIPE_SUCCESS){
-        console.log(action.recipe);
         return Object.assign({},state,{
             loading:false,
             error:null,
