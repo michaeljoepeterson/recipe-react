@@ -18,7 +18,9 @@ function App() {
       <div className="App">
         <Navbar />
         <Route exact path="/" component={LandingPage} />
-        <Route exact path="/create-recipe" component={CreateRecipe} />
+        <Route exact path="/create-recipe" render={(props) => (
+          <CreateRecipe key={props.match.params.pageid} {...props} />)
+        } />
         <Route exact path="/create-admin" component={CreateAdmin} />
         <Route exact path="/recipes" component={RecipeList} />
         <Route exact path="/recipes/:handle" render={(props) => (

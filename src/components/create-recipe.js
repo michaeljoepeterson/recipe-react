@@ -18,11 +18,12 @@ import Switch from '@material-ui/core/Switch';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import {withRouter} from 'react-router-dom';
 
 export class CreateRecipe extends React.Component{
     constructor(props) {
         super(props);
-
+        this.createPath = 'create-recipe';
         this.state = {
             step:1,
             ingredient:1,
@@ -56,8 +57,10 @@ export class CreateRecipe extends React.Component{
         };
     }
     componentDidMount() {
+        
         console.log('=================props',this.props);
-        if(this.props.selectedRecipe){
+        console.log('=================props',this.props.location.pathname);
+        if(this.props.selectedRecipe && !this.props.location.pathname.includes(this.createPath)){
             let {selectedRecipe} = this.props;
             this.setState({
                 step:selectedRecipe.steps.length,
@@ -377,4 +380,4 @@ const mapStateToProps = state => ({
     currentUser: state.auth.currentUser,
     selectedRecipe:state.recipe.selectedRecipe
 });
-export default requiresLogin()(connect(mapStateToProps)(CreateRecipe));
+export default requiresLogin()(withRouter(connect(mapStateToProps)(CreateRecipe)));
