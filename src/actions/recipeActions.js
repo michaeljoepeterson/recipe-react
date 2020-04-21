@@ -1,6 +1,6 @@
 import {API_BASE_URL} from '../config';
 import {normalizeResponseErrors} from './utils';
-
+//use for generic update/post request to recipes
 export const CREATE_RECIPE_REQUEST = "CREATE_RECIPE_REQUEST";
 
 export const createRecipeRequest = () => ({
@@ -9,8 +9,9 @@ export const createRecipeRequest = () => ({
 
 export const CREATE_RECIPE_SUCCESS = "CREATE_RECIPE_SUCCESS";
 
-export const createRecipeSuccess = () => ({
-	type: CREATE_RECIPE_SUCCESS
+export const createRecipeSuccess = (message) => ({
+    type: CREATE_RECIPE_SUCCESS,
+    message
 });
 
 export const CREATE_RECIPE_ERROR = "CREATE_RECIPE_ERROR";
@@ -62,12 +63,44 @@ export const createRecipe = (recipe) => (dispatch,getState) => {
         .then(res => normalizeResponseErrors(res))
         .then(res => res.json())
         .then((jsonRes) => {
-            dispatch(createRecipeSuccess());
+            const message = "Recipe Created!";
+            dispatch(createRecipeSuccess(message));
             console.log(jsonRes);
             resolve(jsonRes);
         })
         .catch(err => {
-            console.log('error logging in',err);
+            console.log('error creating: ',err);
+            dispatch(createRecipeError(err));
+            reject(err);
+        });
+    });
+    
+
+    return promise
+}
+
+export const updateRecipe = (recipe,handle) => (dispatch,getState) => {
+    dispatch(createRecipeRequest());
+    const authToken = getState().auth.authToken;
+    let promise = new Promise((resolve,reject) => {
+        return fetch(`${API_BASE_URL}/recipes/${handle}`,{
+            method:'PUT',
+            headers:{
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${authToken}`
+            },
+            body:JSON.stringify(recipe)
+        })
+        .then(res => normalizeResponseErrors(res))
+        .then(res => res.json())
+        .then((jsonRes) => {
+            const message = "Recipe Updated!";
+            dispatch(createRecipeSuccess(message));
+            console.log(jsonRes);
+            resolve(jsonRes);
+        })
+        .catch(err => {
+            console.log('error updating: ',err);
             dispatch(createRecipeError(err));
             reject(err);
         });

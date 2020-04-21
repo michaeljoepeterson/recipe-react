@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import './styles/containers.css';
 import './styles/forms.css';
 import { MenuItem } from '@material-ui/core';
-import {createRecipe} from '../actions/recipeActions';
+import {createRecipe,updateRecipe} from '../actions/recipeActions';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -62,6 +62,7 @@ export class CreateRecipe extends React.Component{
         console.log('=================props',this.props.location.pathname);
         if(this.props.selectedRecipe && !this.props.location.pathname.includes(this.createPath)){
             let {selectedRecipe} = this.props;
+  
             this.setState({
                 step:selectedRecipe.steps.length,
                 ingredient:selectedRecipe.ingredients.length,
@@ -226,6 +227,7 @@ export class CreateRecipe extends React.Component{
     saveRecipe = (event) =>{
         event.persist();
         event.preventDefault();
+        
         const recipe = Object.assign({},{},{
             title:this.state.title,
             servingSize:this.state.serving,
@@ -242,34 +244,69 @@ export class CreateRecipe extends React.Component{
             featured:this.state.featured
         });
         console.log(recipe);
-        this.props.dispatch(createRecipe(recipe))
 
-        .then(resp=>{
-            console.log(resp);
-            let {code} = resp;
-            if(code === 200){
-                this.setState({
-                    saved:true,
-                    savedMessage:'Recipe Saved!'
-                });
-            }
-            else if(code === 401){
-                this.setState({
-                    saved:true,
-                    savedMessage:'Recipe already exists! Hamburgers'
-                });
-            }
-            else{
-                this.setState({
-                    saved:true,
-                    savedMessage:'Recipe not saved :\'(, something blew up'
-                });
-            }
-        })
+        if(this.props.selectedRecipe && !this.props.location.pathname.includes(this.createPath)){
+            this.props.dispatch(updateRecipe(recipe,this.props.selectedRecipe.handle))
 
-        .catch(err => {
-            console.log(err);
-        })
+            .then(resp=>{
+                console.log(resp);
+                let {code} = resp;
+                if(code === 200){
+                    this.setState({
+                        saved:true,
+                        savedMessage:this.props.recipeMessage
+                    });
+                }
+                else if(code === 401){
+                    this.setState({
+                        saved:true,
+                        savedMessage:'Recipe already exists! Hamburgers'
+                    });
+                }
+                else{
+                    this.setState({
+                        saved:true,
+                        savedMessage:'Recipe not saved :\'(, something blew up'
+                    });
+                }
+            })
+
+            .catch(err => {
+                console.log(err);
+            });
+        }
+        else{
+            this.props.dispatch(createRecipe(recipe))
+
+            .then(resp=>{
+                console.log(resp);
+                let {code} = resp;
+                if(code === 200){
+                    this.setState({
+                        saved:true,
+                        savedMessage:'Recipe Saved!'
+                    });
+                }
+                else if(code === 401){
+                    this.setState({
+                        saved:true,
+                        savedMessage:'Recipe already exists! Hamburgers'
+                    });
+                }
+                else{
+                    this.setState({
+                        saved:true,
+                        savedMessage:'Recipe not saved :\'(, something blew up'
+                    });
+                }
+            })
+
+            .catch(err => {
+                console.log(err);
+            });
+        }
+
+        
     }
 
     snackbarClosed = (name) => {
@@ -378,6 +415,7 @@ export class CreateRecipe extends React.Component{
 
 const mapStateToProps = state => ({
     currentUser: state.auth.currentUser,
-    selectedRecipe:state.recipe.selectedRecipe
+    selectedRecipe:state.recipe.selectedRecipe,
+    recipeMessage:state.recipe.message
 });
 export default requiresLogin()(withRouter(connect(mapStateToProps)(CreateRecipe)));
