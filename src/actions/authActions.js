@@ -1,5 +1,5 @@
 import {normalizeResponseErrors} from './utils';
-import {API_BASE_URL} from '../config';
+import {API_BASE_URL,setTestUrl} from '../config';
 import {saveAuthToken} from '../local-storage';
 import jwtDecode from 'jwt-decode';
 //handle loading state
@@ -26,14 +26,25 @@ export const logoutSession = () => ({
     type:LOGOUT
 });
 
+export const TEST_ENABLE = 'TEST_ENABLE';
+export const testEnable = () => ({
+    type:TEST_ENABLE
+});
+
 const storeAuthInfo = (authToken, dispatch) => {
     const decodedToken = jwtDecode(authToken);
     dispatch(authSuccess(decodedToken.user,authToken));
     saveAuthToken(authToken);
 }
 
+export const enableTestMode = () => (dispatch) =>{
+    setTestUrl();
+    dispatch(testEnable());
+}
+
 export const login = (email,password) => dispatch => {
     dispatch(authRequest());
+    console.log(API_BASE_URL);
     return (
         fetch(`${API_BASE_URL}/auth/login`,{
             method:'POST',

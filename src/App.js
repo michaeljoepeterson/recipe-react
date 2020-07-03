@@ -26,6 +26,9 @@ function App() {
         <Route exact path="/recipes/:handle" render={(props) => (
           <RecipePage key={props.match.params.pageid} {...props} />)
         } />
+        <Route exact path="/test"  render={(props) => (
+            <LandingPage />)
+          }/>
       </div>
     </ThemeProvider>
   );
